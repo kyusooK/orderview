@@ -17,52 +17,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 //<<< DDD / Aggregate Root
 public class Order  {
-
-
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    
-    
-    
-    
     private Long id;
-    
-    
-    
     
     private String userId;
     
-    
-    
-    
     private Integer qty;
-    
-    
-    
     
     private String address;
 
     @PostPersist
     public void onPostPersist(){
-    test
-
 
         OrderPlaced orderPlaced = new OrderPlaced(this);
         orderPlaced.publishAfterCommit();
-
-    
     }
 
     public static OrderRepository repository(){
         OrderRepository orderRepository = OrderApplication.applicationContext.getBean(OrderRepository.class);
         return orderRepository;
     }
-
-
-
-
-
-
 }
 //>>> DDD / Aggregate Root
