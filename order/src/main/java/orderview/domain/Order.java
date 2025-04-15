@@ -28,8 +28,21 @@ public class Order  {
     
     private String address;
 
+    private String productName;
+
     @PostPersist
     public void onPostPersist(){
+        // OrderItem Repository를 통해 조회
+        OrderItemRepository orderItemRepository = OrderItem.repository();
+        
+        // 예: productName으로 조회하는 경우
+        String searchProductName = this.getProductName(); // 실제 검색할 상품명으로 변경 필요
+        OrderItem foundOrderItem = orderItemRepository.getOrderItem(searchProductName);
+        
+        // 조회 결과 처리 예시
+        if (foundOrderItem != null) {
+            System.out.println("조회된 상품: " + foundOrderItem.getProductName());
+        }
 
         OrderPlaced orderPlaced = new OrderPlaced(this);
         orderPlaced.publishAfterCommit();
